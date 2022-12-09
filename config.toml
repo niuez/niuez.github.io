@@ -1,7 +1,7 @@
-baseURL = "https://quartz.jzhao.xyz/"
+baseURL = "https://niuez.github.io/"
 languageCode = "en-us"
-googleAnalytics = "G-XYFD95KB4J"
 relativeURLs = false
+googleAnalytics = "UA-157596444-1"
 disablePathToLower = true
 ignoreFiles = [
     "/content/templates/*",
