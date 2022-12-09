@@ -1,0 +1,360 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=description content="以前僕が書いた記事を復習するときにとても読みにくかったので、もう一度書き直します。
+ 倍数ゼータ・メビウス変換についても書いたので、合わせて読むといいかも。同じ問題を別視点で考えてます。
+約数ゼータ・メビウス変換 関数$f(n)$に対する約数ゼータ変換は以下の定義です。$d|n$は「$d$は$n$の約数」という意味です(dはdivisorのd)。約数の足し合わせですね。
+$$ F(n) = \sum_{ d | n } f(d) $$
+約数メビウス変換は、約数ゼータ変換の逆向きの操作です。つまり、$F(n)$から$f(n)$を求める操作です。
+ちなみに、メビウス変換はメビウスの反転公式から メビウス関数を$\mu(n)$とすれば、
+$$ f(n) = \sum_{d | n} F(d) \mu(\frac{n}{d}) $$"><title>約数ゼータ・メビウス変換のメモ</title><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" type=image/png href=https://niuez.github.io//icon.png><link href=https://niuez.github.io/styles.706bb6073ba85d26809f9096dae23a6b.min.css rel=stylesheet><link href=https://niuez.github.io/styles/_light_syntax.86a48a52faebeaaf42158b72922b1c90.min.css rel=stylesheet id=theme-link><script src=https://niuez.github.io/js/darkmode.d1205e3dd24b2ccf335c0017d7e59abc.min.js></script>
+<script src=https://niuez.github.io/js/util.5e39932758f9ecaf45fd54506ed61416.min.js></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css integrity=sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js integrity=sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/copy-tex.min.js integrity=sha384-ww/583aHhxWkz5DEVn6OKtNiIaLi2iBRNZXfJRiY1Ai7tnJ9UXpEsyvOITVpTl4A crossorigin=anonymous></script>
+<script src=https://unpkg.com/@floating-ui/core@0.7.3></script>
+<script src=https://unpkg.com/@floating-ui/dom@0.5.4></script>
+<script src=https://niuez.github.io/js/popover.6da9b273c092cc16fc1aa904d71a2163.min.js></script>
+<script src=https://niuez.github.io/js/code-title.b35124ad8db0ba37162b886afb711cbc.min.js></script>
+<script src=https://niuez.github.io/js/clipboard.c20857734e53a3fb733b7443879efa61.min.js></script>
+<script src=https://niuez.github.io/js/callouts.7723cac461d613d118ee8bb8216b9838.min.js></script>
+<script>const SEARCH_ENABLED=!1,LATEX_ENABLED=!0,PRODUCTION=!0,BASE_URL="https://niuez.github.io/",fetchData=Promise.all([fetch("https://niuez.github.io/indices/linkIndex.d8a32df16cc28dbaafd8a87719e25ad0.min.json").then(e=>e.json()).then(e=>({index:e.index,links:e.links})),fetch("https://niuez.github.io/indices/contentIndex.7dd5d1e0149daf849ec341b8103f22c5.min.json").then(e=>e.json())]).then(([{index:e,links:t},n])=>({index:e,links:t,content:n})),render=()=>{const e=new URL(BASE_URL),t=e.pathname,n=window.location.pathname,o=t==n;addCopyButtons(),addTitleToCodeBlocks(),addCollapsibleCallouts(),initPopover("https://niuez.github.io",!0);var s=document.getElementsByClassName("mermaid");s.length>0&&import("https://unpkg.com/mermaid@9/dist/mermaid.esm.min.mjs").then(e=>{e.default.init()})},init=(e=document)=>{addCopyButtons(),addTitleToCodeBlocks(),renderMathInElement(e.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}],macros:{'’':"'"},throwOnError:!1})}</script><script type=module>
+    import { attachSPARouting } from "https:\/\/niuez.github.io\/js\/router.9d4974281069e9ebb189f642ae1e3ca2.min.js"
+    attachSPARouting(init, render)
+  </script></head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,o,i,a,t,n,s){e.GoogleAnalyticsObject=t,e[t]=e[t]||function(){(e[t].q=e[t].q||[]).push(arguments)},e[t].l=1*new Date,n=o.createElement(i),s=o.getElementsByTagName(i)[0],n.async=1,n.src=a,s.parentNode.insertBefore(n,s)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-157596444-1","auto"),ga("send","pageview"))</script><body><div id=search-container><div id=search-space><input autocomplete=off id=search-bar name=search type=text aria-label=Search placeholder="Search for something..."><div id=results-container></div></div></div><script src=https://cdn.jsdelivr.net/npm/flexsearch@0.7.21/dist/flexsearch.bundle.js integrity="sha256-i3A0NZGkhsKjVMzFxv3ksk0DZh3aXqu0l49Bbh0MdjE=" crossorigin=anonymous defer></script>
+<script defer src=https://niuez.github.io/js/full-text-search.51f0b1753e9b30839d053f8a98cc20d1.min.js></script><div class=singlePage><header><h1 id=page-title><a href=https://niuez.github.io/>Nuartz</a></h1><div class=spacer></div><div id=search-icon><p>Search</p><svg tabindex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search Icon</title><desc id="desc">Icon to open search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/><circle cx="8" cy="8" r="7"/></g></svg></div><div class=darkmode><input class=toggle id=darkmode-toggle type=checkbox tabindex=-1>
+<label id=toggle-label-light for=darkmode-toggle tabindex=-1><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="dayIcon" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35"><title>Light Mode</title><path d="M6 17.5C6 16.672 5.328 16 4.5 16h-3C.672 16 0 16.672.0 17.5S.672 19 1.5 19h3C5.328 19 6 18.328 6 17.5zM7.5 26c-.414.0-.789.168-1.061.439l-2 2C4.168 28.711 4 29.086 4 29.5 4 30.328 4.671 31 5.5 31c.414.0.789-.168 1.06-.44l2-2C8.832 28.289 9 27.914 9 27.5 9 26.672 8.329 26 7.5 26zm10-20C18.329 6 19 5.328 19 4.5v-3C19 .672 18.329.0 17.5.0S16 .672 16 1.5v3C16 5.328 16.671 6 17.5 6zm10 3c.414.0.789-.168 1.06-.439l2-2C30.832 6.289 31 5.914 31 5.5 31 4.672 30.329 4 29.5 4c-.414.0-.789.168-1.061.44l-2 2C26.168 6.711 26 7.086 26 7.5 26 8.328 26.671 9 27.5 9zM6.439 8.561C6.711 8.832 7.086 9 7.5 9 8.328 9 9 8.328 9 7.5c0-.414-.168-.789-.439-1.061l-2-2C6.289 4.168 5.914 4 5.5 4 4.672 4 4 4.672 4 5.5c0 .414.168.789.439 1.06l2 2.001zM33.5 16h-3c-.828.0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5h3c.828.0 1.5-.672 1.5-1.5S34.328 16 33.5 16zM28.561 26.439C28.289 26.168 27.914 26 27.5 26c-.828.0-1.5.672-1.5 1.5.0.414.168.789.439 1.06l2 2C28.711 30.832 29.086 31 29.5 31c.828.0 1.5-.672 1.5-1.5.0-.414-.168-.789-.439-1.061l-2-2zM17.5 29c-.829.0-1.5.672-1.5 1.5v3c0 .828.671 1.5 1.5 1.5s1.5-.672 1.5-1.5v-3C19 29.672 18.329 29 17.5 29zm0-22C11.71 7 7 11.71 7 17.5S11.71 28 17.5 28 28 23.29 28 17.5 23.29 7 17.5 7zm0 18c-4.136.0-7.5-3.364-7.5-7.5s3.364-7.5 7.5-7.5 7.5 3.364 7.5 7.5S21.636 25 17.5 25z"/></svg></label><label id=toggle-label-dark for=darkmode-toggle tabindex=-1><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="nightIcon" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'"><title>Dark Mode</title><path d="M96.76 66.458c-.853-.852-2.15-1.064-3.23-.534-6.063 2.991-12.858 4.571-19.655 4.571C62.022 70.495 50.88 65.88 42.5 57.5 29.043 44.043 25.658 23.536 34.076 6.47c.532-1.08.318-2.379-.534-3.23-.851-.852-2.15-1.064-3.23-.534-4.918 2.427-9.375 5.619-13.246 9.491-9.447 9.447-14.65 22.008-14.65 35.369.0 13.36 5.203 25.921 14.65 35.368s22.008 14.65 35.368 14.65c13.361.0 25.921-5.203 35.369-14.65 3.872-3.871 7.064-8.328 9.491-13.246C97.826 68.608 97.611 67.309 96.76 66.458z"/></svg></label></div></header><article><h1>約数ゼータ・メビウス変換のメモ</h1><p class=meta>Last updated
+Apr 18, 2022
+<a href=https://github.com/niuez/quartz/tree/hugo/content/notes/divisor_transform2.md rel=noopener>Edit Source</a></p><ul class=tags><li><a href=https://niuez.github.io/tags/Algorithm/>Algorithm</a></li></ul><aside class=mainTOC><details><summary>Table of Contents</summary><nav id=TableOfContents><ol><li><a href=#約数ゼータメビウス変換>約数ゼータ・メビウス変換</a></li><li><a href=#約数ゼータメビウス変換の実装>約数ゼータ・メビウス変換の実装</a></li><li><a href=#gcdの関係>gcdの関係</a></li><li><a href=#agc038-c---lcms>AGC038 C - LCMs</a></li><li><a href=#追記>追記</a></li><li><a href=#abc248-g---gcd-cost-on-the-treeのパスグラフ版>ABC248 G - GCD cost on the treeのパスグラフ版</a></li></ol></nav></details></aside><p><a rel=noopener class="internal-link broken" data-src=https://niuez.github.io/notes/divisor_transform_memo/>以前僕が書いた記事</a>を復習するときにとても読みにくかったので、もう一度書き直します。</p><p><a rel=noopener class="internal-link broken" data-src=https://niuez.github.io/notes/multiple_transform/>倍数ゼータ・メビウス変換</a>についても書いたので、合わせて読むといいかも。同じ問題を別視点で考えてます。</p><a href=#約数ゼータメビウス変換><h2 id=約数ゼータメビウス変換><span class=hanchor arialabel=Anchor># </span>約数ゼータ・メビウス変換</h2></a><p>関数$f(n)$に対する約数ゼータ変換は以下の定義です。$d|n$は「$d$は$n$の約数」という意味です(dはdivisorのd)。約数の足し合わせですね。</p><p>$$
+F(n) = \sum_{ d | n } f(d)
+$$</p><p>約数メビウス変換は、約数ゼータ変換の逆向きの操作です。つまり、$F(n)$から$f(n)$を求める操作です。</p><p>ちなみに、メビウス変換はメビウスの反転公式から
+<a href=https://ja.wikipedia.org/wiki/%E3%83%A1%E3%83%93%E3%82%A6%E3%82%B9%E9%96%A2%E6%95%B0 rel=noopener>メビウス関数</a>を$\mu(n)$とすれば、</p><p>$$
+f(n) = \sum_{d | n} F(d) \mu(\frac{n}{d})
+$$</p><p>です。メビウス関数については蟻本にも書いてあります。</p><a href=#約数ゼータメビウス変換の実装><h2 id=約数ゼータメビウス変換の実装><span class=hanchor arialabel=Anchor># </span>約数ゼータ・メビウス変換の実装</h2></a><p><a href=https://noshi91.hatenablog.com/entry/2018/12/27/121649 rel=noopener>高速ゼータ変換の約数版 O(N log(log(N))) - noshi91のメモ</a>がはやいです！</p><a href=#gcdの関係><h2 id=gcdの関係><span class=hanchor arialabel=Anchor># </span>gcdの関係</h2></a><p>ある$n, m$について、$F(\gcd(n, m))$を考えてみます。$f$は$F$をメビウス変換した関数です。</p><p>$$
+F(\gcd(n, m)) = \sum_{d | gcd(n, m)} f(d) = \sum_{d | n, d | m} f(d)
+$$</p><p>最後の$\sum$の条件が2つあるので、これをどうにか$d | n$だけにしてみます。</p><p>$$
+c(d) =
+\begin{cases}
+1 & d | m \\\ 0 & \text{otherwise}
+\end{cases}
+$$</p><p>とすれば以下のようになります。</p><p>$$
+F(\gcd(n, m)) = \sum_{d | n} f(d) c(d)
+$$</p><p>こうすると例えば、$\sum_i F(\gcd(n, m_i))$の計算は</p><p>$$
+\sum_i F(\gcd(n, m_i)) = \sum_{d | n} f(d) (\sum_i c_i(d))
+$$</p><p>とまとめて計算できます。</p><a href=#agc038-c---lcms><h2 id=agc038-c---lcms><span class=hanchor arialabel=Anchor># </span>AGC038 C - LCMs</h2></a><p><a href=https://atcoder.jp/contests/agc038/tasks/agc038_c rel=noopener>AGC038 C - LCMs</a></p><p>$$
+\begin{align}
+& \sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} \operatorname{lcm}(A_i, A_j) \\\ = & \sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} A_i \frac{A_j}{\gcd(A_i, A_j)} \\\ \end{align}
+$$</p><p>$F(n) = \frac{1}{n}$として、その約数メビウス変換を$f(n)$としましょう。すると、</p><p>$$
+\begin{align}
+= & \sum_{i = 0}^{N - 1} A_i \sum_{j = 0}^{i - 1} F(\gcd(A_i, A_j)) A_j \\\ = & \sum_{i = 0}^{N - 1} A_i \sum_{j = 0}^{i - 1} (\sum_{d | \gcd(A_i, A_j)} f(d) A_j) \\\ = & \sum_{i = 0}^{N - 1} A_i \sum_{j = 0}^{i - 1} (\sum_{d | A_i, d | A_j} f(d) A_j) \\\ \end{align}
+$$</p><p>ここで、上の$c(d)$のような係数テクを導入します。</p><p>$$
+s_j(d) =
+\begin{cases}
+A_j & d | A_j \\\ 0 & \text{otherwise}
+\end{cases}
+$$</p><p>とすれば、$d | A_j$の条件を取り除けて</p><p>$$
+\begin{align}
+= & \sum_{i = 0}^{N - 1} A_i \sum_{j = 0}^{i - 1} (\sum_{d | A_i} f(d) s_j(d)) \\\ = & \sum_{i = 0}^{N - 1} A_i \sum_{d | A_i} f(d) (\sum_{j = 0}^{i - 1} s_j(d)) \\\ \end{align}
+$$</p><p>$\sum_{j = 0}^{i - 1} s_j(d)$は$i$を進めながら更新できます。計算量は、$f$を求める約数メビウス変換が$O(A \log\log A)$、約数の数は$O(\sqrt A)$で抑えられるので、全体で$O(A \log\log A + N \sqrt A)$です。</p><p><a href=https://atcoder.jp/contests/agc038/submissions/31070938 rel=noopener>提出コード</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=k>const</span> <span class=n>i64</span> <span class=n>MAX</span> <span class=o>=</span> <span class=mf>1e6</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>i64</span> <span class=n>N</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>N</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>vector</span><span class=o>&lt;</span><span class=n>i64</span><span class=o>&gt;</span> <span class=n>A</span><span class=p>(</span><span class=n>N</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>rep</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>N</span><span class=p>)</span> <span class=n>cin</span> <span class=o>&gt;&gt;</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  <span class=n>vector</span><span class=o>&lt;</span><span class=n>fp</span><span class=o>&gt;</span> <span class=n>f</span><span class=p>(</span><span class=n>MAX</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>rep</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=n>MAX</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>f</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>fp</span><span class=p>(</span><span class=n>i</span><span class=p>).</span><span class=n>inv</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=n>inverse_divisor_transform</span><span class=p>(</span><span class=n>f</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=n>vector</span><span class=o>&lt;</span><span class=n>fp</span><span class=o>&gt;</span> <span class=n>sum</span><span class=p>(</span><span class=n>MAX</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>fp</span> <span class=n>ans</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>for</span><span class=p>(</span><span class=k>auto</span> <span class=nl>a</span><span class=p>:</span> <span class=n>A</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>fp</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i64</span> <span class=n>d</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>d</span> <span class=o>*</span> <span class=n>d</span> <span class=o>&lt;=</span> <span class=n>a</span><span class=p>;</span> <span class=n>d</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span><span class=p>(</span><span class=n>a</span> <span class=o>%</span> <span class=n>d</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>+=</span> <span class=n>f</span><span class=p>[</span><span class=n>d</span><span class=p>]</span> <span class=o>*</span> <span class=n>sum</span><span class=p>[</span><span class=n>d</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=n>sum</span><span class=p>[</span><span class=n>d</span><span class=p>]</span> <span class=o>+=</span> <span class=n>fp</span><span class=p>(</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>i64</span> <span class=n>dd</span> <span class=o>=</span> <span class=n>a</span> <span class=o>/</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>dd</span> <span class=o>!=</span> <span class=n>d</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>res</span> <span class=o>+=</span> <span class=n>f</span><span class=p>[</span><span class=n>dd</span><span class=p>]</span> <span class=o>*</span> <span class=n>sum</span><span class=p>[</span><span class=n>dd</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>          <span class=n>sum</span><span class=p>[</span><span class=n>dd</span><span class=p>]</span> <span class=o>+=</span> <span class=n>fp</span><span class=p>(</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>ans</span> <span class=o>+=</span> <span class=n>res</span> <span class=o>*</span> <span class=n>fp</span><span class=p>(</span><span class=n>a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>ans</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><a href=#追記><h2 id=追記><span class=hanchor arialabel=Anchor># </span>追記</h2></a><p>約数列挙にosa_k法を使うとめっちゃはやくなります。</p><p><a href=https://atcoder.jp/contests/agc038/submissions/31096206 rel=noopener>提出コード</a></p><a href=#abc248-g---gcd-cost-on-the-treeのパスグラフ版><h2 id=abc248-g---gcd-cost-on-the-treeのパスグラフ版><span class=hanchor arialabel=Anchor># </span>ABC248 G - GCD cost on the treeのパスグラフ版</h2></a><p><a href=https://atcoder.jp/contests/abc248/tasks/abc248_g rel=noopener>ABC248 G - GCD cost on the tree</a>のパスグラフ版から考えて、木に応用しようとしたけど失敗しちゃったのでパスグラフの解法だけでもメモっておきます&mldr;</p><p>$N$要素からなる数列$A_0, \cdots, A_{N - 1}$が与えられて以下を求める問題です。</p><p>$$
+\sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} (i - j + 1) \gcd(A_j, \cdots, A_i)
+$$</p><p>式変形していきます。</p><p>$$
+\begin{align}
+& = \sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} (i + 1) \gcd(A_j, \cdots, A_i) \\\ & - \sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} j \gcd(A_j, \cdots, A_i)
+\end{align}
+$$</p><p>$F(n) = n$として、その約数メビウス変換を$f(n)$とします。まずは前半部分を計算しましょう。
+$$
+\begin{align}
+& \sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} (i + 1) \gcd(A_j, \cdots, A_i) \\\ = & \sum_{i = 0}^{N - 1} (i + 1) \sum_{j = 0}^{i - 1} F(\gcd(A_j, \cdots, A_i)) \\\ = & \sum_{i = 0}^{N - 1} (i + 1) \sum_{j = 0}^{i - 1} (\sum_{d | A_j, \cdots d | A_i} f(d)) \\\ \end{align}
+$$</p><p>先にあったような係数テクをします。</p><p>$$
+s_j(d) =
+\begin{cases}
+1 & d | A_j, \cdots d | A_{i - 1} \\\ 0 & \text{otherwise}
+\end{cases}
+$$</p><p>とすると、</p><p>$$
+\begin{align}
+= & \sum_{i = 0}^{N - 1} (i + 1) \sum_{j = 0}^{i - 1} (\sum_{d | A_i} f(d) s_j(d)) \\\ = & \sum_{i = 0}^{N - 1} (i + 1) \sum_{d | A_i} f(d) (\sum_{j = 0}^{i - 1} s_j(d)) \\\ \end{align}
+$$</p><p>$\sum_{j = 0}^{i - 1} s_j(d)$は、$i$を進めながら更新できます。$S_{i}(d) = \sum_{j = 0}^{i - 1} s_j(d)$としたとき、</p><p>$$
+S_{i + 1}(d) =
+\begin{cases}
+1 + S_i(d) & d | A_i \\\ 0 & \text{otherwise}
+\end{cases}
+$$</p><p>とすればよいです。実装方法としては、$S_{i + 1}(d) \neq 0$となる$d$の数が$O(\sqrt A)$で抑えられることを活かす方法と、最後に$S(d)$を更新したときの$i$を記録しておく方法がありそうです。</p><p>後半部分も計算します。</p><p>$$
+\begin{align}
+& \sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} j \gcd(A_j, \cdots, A_i) \\\ = & \sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} j F(\gcd(A_j, \cdots, A_i)) \\\ = & \sum_{i = 0}^{N - 1} \sum_{j = 0}^{i - 1} (\sum_{d | A_j, \cdots d | A_i} f(d) j) \\\ \end{align}
+$$</p><p>先にあったような係数テクをします。</p><p>$$
+t_j(d) =
+\begin{cases}
+j & d | A_j, \cdots d | A_{i - 1} \\\ 0 & \text{otherwise}
+\end{cases}
+$$</p><p>とすると、</p><p>$$
+\begin{align}
+= & \sum_{i = 0}^{N - 1} (i + 1) \sum_{j = 0}^{i - 1} (\sum_{d | A_i} f(d) t_j(d)) \\\ = & \sum_{i = 0}^{N - 1} (i + 1) \sum_{d | A_i} f(d) (\sum_{j = 0}^{i - 1} t_j(d)) \\\ \end{align}
+$$</p><p>$T_{i} = \sum_{j = 0}^{i - 1} t_j(d)$も同様に、$i$を進めながら更新できます。</p><p>$$
+T_{i + 1}(d) =
+\begin{cases}
+i + T_i(d) & d | A_i \\\ 0 & \text{otherwise}
+\end{cases}
+$$</p><p>これでパスグラフに関しては解けているはず&mldr;？下に検証コードを載せておきます。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-cpp data-lang=cpp><span class=line><span class=cl><span class=k>const</span> <span class=n>i64</span> <span class=n>MAX</span> <span class=o>=</span> <span class=mf>1e5</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>fp</span> <span class=nf>solve</span><span class=p>(</span><span class=n>i64</span> <span class=n>N</span><span class=p>,</span> <span class=n>vector</span><span class=o>&lt;</span><span class=n>i64</span><span class=o>&gt;</span> <span class=n>A</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>vector</span><span class=o>&lt;</span><span class=n>fp</span><span class=o>&gt;</span> <span class=n>f</span><span class=p>(</span><span class=n>MAX</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>rep</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>MAX</span><span class=p>)</span> <span class=n>f</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>fp</span><span class=p>(</span><span class=n>i</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>inverse_divisor_transform</span><span class=p>(</span><span class=n>f</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=n>fp</span> <span class=n>left</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>vector</span><span class=o>&lt;</span><span class=n>pair</span><span class=o>&lt;</span><span class=kt>int</span><span class=p>,</span> <span class=n>fp</span><span class=o>&gt;&gt;</span> <span class=n>sum</span><span class=p>(</span><span class=n>MAX</span><span class=p>,</span> <span class=p>{</span> <span class=o>-</span><span class=mi>1</span><span class=p>,</span> <span class=n>fp</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=n>rep</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>N</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>fp</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i64</span> <span class=n>d</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>d</span> <span class=o>*</span> <span class=n>d</span> <span class=o>&lt;=</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>];</span> <span class=n>d</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>%</span> <span class=n>d</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>auto</span><span class=o>&amp;</span> <span class=p>[</span><span class=n>b</span><span class=p>,</span> <span class=n>s</span><span class=p>]</span> <span class=o>=</span> <span class=n>sum</span><span class=p>[</span><span class=n>d</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>+=</span> <span class=p>(</span><span class=n>b</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>==</span> <span class=n>i</span> <span class=o>?</span> <span class=nl>s</span> <span class=p>:</span> <span class=n>fp</span><span class=p>(</span><span class=mi>0</span><span class=p>))</span> <span class=o>*</span> <span class=n>f</span><span class=p>[</span><span class=n>d</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>b</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>!=</span> <span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>s</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>b</span> <span class=o>=</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>s</span> <span class=o>+=</span> <span class=n>fp</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>/</span> <span class=n>d</span> <span class=o>!=</span> <span class=n>d</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>i64</span> <span class=n>dd</span> <span class=o>=</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>/</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=k>auto</span><span class=o>&amp;</span> <span class=p>[</span><span class=n>b</span><span class=p>,</span> <span class=n>s</span><span class=p>]</span> <span class=o>=</span> <span class=n>sum</span><span class=p>[</span><span class=n>dd</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>          <span class=n>res</span> <span class=o>+=</span> <span class=p>(</span><span class=n>b</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>==</span> <span class=n>i</span> <span class=o>?</span> <span class=nl>s</span> <span class=p>:</span> <span class=n>fp</span><span class=p>(</span><span class=mi>0</span><span class=p>))</span> <span class=o>*</span> <span class=n>f</span><span class=p>[</span><span class=n>dd</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>          <span class=k>if</span><span class=p>(</span><span class=n>b</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>!=</span> <span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>s</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=p>}</span>
+</span></span><span class=line><span class=cl>          <span class=n>b</span> <span class=o>=</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=n>s</span> <span class=o>+=</span> <span class=n>fp</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>left</span> <span class=o>+=</span> <span class=n>res</span> <span class=o>*</span> <span class=n>fp</span><span class=p>(</span><span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>vector</span><span class=o>&lt;</span><span class=n>pair</span><span class=o>&lt;</span><span class=kt>int</span><span class=p>,</span> <span class=n>fp</span><span class=o>&gt;&gt;</span> <span class=n>sum</span><span class=p>(</span><span class=n>MAX</span><span class=p>,</span> <span class=p>{</span> <span class=o>-</span><span class=mi>1</span><span class=p>,</span> <span class=n>fp</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=n>rep</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>N</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>fp</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i64</span> <span class=n>d</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span> <span class=n>d</span> <span class=o>*</span> <span class=n>d</span> <span class=o>&lt;=</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>];</span> <span class=n>d</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>%</span> <span class=n>d</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>auto</span><span class=o>&amp;</span> <span class=p>[</span><span class=n>b</span><span class=p>,</span> <span class=n>s</span><span class=p>]</span> <span class=o>=</span> <span class=n>sum</span><span class=p>[</span><span class=n>d</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span> <span class=o>+=</span> <span class=p>(</span><span class=n>b</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>==</span> <span class=n>i</span> <span class=o>?</span> <span class=nl>s</span> <span class=p>:</span> <span class=n>fp</span><span class=p>(</span><span class=mi>0</span><span class=p>))</span> <span class=o>*</span> <span class=n>f</span><span class=p>[</span><span class=n>d</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>b</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>!=</span> <span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>s</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>b</span> <span class=o>=</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>s</span> <span class=o>+=</span> <span class=n>fp</span><span class=p>(</span><span class=n>i</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>/</span> <span class=n>d</span> <span class=o>!=</span> <span class=n>d</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>i64</span> <span class=n>dd</span> <span class=o>=</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>/</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=k>auto</span><span class=o>&amp;</span> <span class=p>[</span><span class=n>b</span><span class=p>,</span> <span class=n>s</span><span class=p>]</span> <span class=o>=</span> <span class=n>sum</span><span class=p>[</span><span class=n>dd</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>          <span class=n>res</span> <span class=o>+=</span> <span class=p>(</span><span class=n>b</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>==</span> <span class=n>i</span> <span class=o>?</span> <span class=nl>s</span> <span class=p>:</span> <span class=n>fp</span><span class=p>(</span><span class=mi>0</span><span class=p>))</span> <span class=o>*</span> <span class=n>f</span><span class=p>[</span><span class=n>dd</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>          <span class=k>if</span><span class=p>(</span><span class=n>b</span> <span class=o>+</span> <span class=mi>1</span> <span class=o>!=</span> <span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>s</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=p>}</span>
+</span></span><span class=line><span class=cl>          <span class=n>b</span> <span class=o>=</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=n>s</span> <span class=o>+=</span> <span class=n>fp</span><span class=p>(</span><span class=n>i</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>left</span> <span class=o>-=</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>left</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>i64</span> <span class=nf>gcd</span><span class=p>(</span><span class=n>i64</span> <span class=n>a</span><span class=p>,</span> <span class=n>i64</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span><span class=p>(</span><span class=n>b</span> <span class=o>==</span> <span class=mi>0</span><span class=p>)</span> <span class=k>return</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>gcd</span><span class=p>(</span><span class=n>b</span><span class=p>,</span> <span class=n>a</span> <span class=o>%</span> <span class=n>b</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>fp</span> <span class=nf>naive</span><span class=p>(</span><span class=n>i64</span> <span class=n>N</span><span class=p>,</span> <span class=n>std</span><span class=o>::</span><span class=n>vector</span><span class=o>&lt;</span><span class=n>i64</span><span class=o>&gt;</span> <span class=n>A</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>fp</span> <span class=n>ans</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>rep</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>N</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>i64</span> <span class=n>G</span> <span class=o>=</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=n>rep</span><span class=p>(</span><span class=n>j</span><span class=p>,</span><span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span><span class=n>N</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>G</span> <span class=o>=</span> <span class=n>gcd</span><span class=p>(</span><span class=n>G</span><span class=p>,</span> <span class=n>A</span><span class=p>[</span><span class=n>j</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>      <span class=n>ans</span> <span class=o>+=</span> <span class=n>fp</span><span class=p>(</span><span class=n>G</span><span class=p>)</span> <span class=o>*</span> <span class=n>fp</span><span class=p>(</span><span class=n>j</span> <span class=o>-</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>ans</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=n>rep</span><span class=p>(</span><span class=n>s</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=mi>1000</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>i64</span> <span class=n>N</span> <span class=o>=</span> <span class=mi>1000</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>mt19937</span> <span class=n>mt</span><span class=p>(</span><span class=n>s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>uniform_int_distribution</span><span class=o>&lt;&gt;</span> <span class=n>dist</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=p>(</span><span class=kt>int</span><span class=p>)</span><span class=mf>1e5</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>vector</span><span class=o>&lt;</span><span class=n>i64</span><span class=o>&gt;</span> <span class=n>A</span><span class=p>(</span><span class=n>N</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>rep</span><span class=p>(</span><span class=n>i</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>N</span><span class=p>)</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>dist</span><span class=p>(</span><span class=n>mt</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;seed: &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>s</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//cout &lt;&lt; N &lt;&lt; endl;
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>//cout &lt;&lt; A &lt;&lt; endl;
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>fp</span> <span class=n>so</span><span class=p>,</span> <span class=n>na</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;solve: &#34;</span> <span class=o>&lt;&lt;</span> <span class=p>(</span><span class=n>so</span> <span class=o>=</span> <span class=n>solve</span><span class=p>(</span><span class=n>N</span><span class=p>,</span> <span class=n>A</span><span class=p>))</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;naive: &#34;</span> <span class=o>&lt;&lt;</span> <span class=p>(</span><span class=n>na</span> <span class=o>=</span> <span class=n>naive</span><span class=p>(</span><span class=n>N</span><span class=p>,</span> <span class=n>A</span><span class=p>))</span> <span class=o>&lt;&lt;</span> <span class=n>endl</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>assert</span><span class=p>(</span><span class=n>so</span> <span class=o>==</span> <span class=n>na</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>木バージョンが解けないので、がんばる</p></article><hr><div id=contact_buttons><footer><p>Made by Jacky Zhao using <a href=https://github.com/jackyzha0/quartz>Quartz</a>, © 2022</p><ul><li><a href=https://niuez.github.io/>Home</a></li><li><a href=https://twitter.com/xiuez>Twitter</a></li><li><a href=https://github.com/niuez>Github</a></li></ul></footer></div></div></body></html>
