@@ -3,4 +3,8 @@ title: Nuartz
 enableToc: false
 ---
 
-# I am...
+[notes](notes/)
+
+# I am ...
+
+

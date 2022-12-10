@@ -10,7 +10,7 @@ enableSPA: true
 enableFooter: false
 enableContextualBacklinks: true
 enableRecentNotes: false
-enableGitHubEdit: true
+enableGitHubEdit: false
 enableMermaid: true
 GitHubLink: https://github.com/niuez/niuez.github.io/tree/hugo/content
 search:
