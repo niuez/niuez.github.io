@@ -1,5 +1,5 @@
-name: Jacky Zhao
-enableToc: true
+name: Niuez
+enableToc: false
 openToc: false
 enableLinkPreview: true
 enableLatex: true
@@ -12,7 +12,7 @@ enableContextualBacklinks: true
 enableRecentNotes: false
 enableGitHubEdit: true
 enableMermaid: true
-GitHubLink: https://github.com/niuez/quartz/tree/hugo/content
+GitHubLink: https://github.com/niuez/niuez.github.io/tree/hugo/content
 search:
   enableSemanticSearch: false
   operandApiKey: "REPLACE-WITH-YOUR-OPERAND-API-KEY"

@@ -270,6 +270,10 @@ a {
   }
 }
 
+p > a {
+  text-decoration: underline;
+}
+
 pre {
   font-family: var(--font-mono);
   padding: 0.75em;
