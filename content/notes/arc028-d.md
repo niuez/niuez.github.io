@@ -10,11 +10,11 @@ tags: ["Editorial", "FPS"]
 まず、クエリを無視して計算をします。このときのFPSを$F$とおくと、
 
 $$
-\begin{eqnarray}
-F &=& \prod\_{i = 1}^{N} (1 + \cdots + x^{a\_i}) \\\\
-&=& \prod\_{i = 1}^{N} \frac{1 - x^{a\_i + 1}}{1 - x} \\\\
-&=& (1 - x)^{-N} \prod\_{i = 1}^{N} (1 - x^{a\_i + 1})
-\end{eqnarray}
+\begin{aligned}
+F &= \prod\_{i = 1}^{N} (1 + \cdots + x^{a\_i}) \\\\
+&= \prod\_{i = 1}^{N} \frac{1 - x^{a\_i + 1}}{1 - x} \\\\
+&= (1 - x)^{-N} \prod\_{i = 1}^{N} (1 - x^{a\_i + 1})
+\end{aligned}
 $$
 
 [EDPC M - Candies](./edpc-m/)と同じ式となり$O(NM)$で計算できます。
@@ -22,10 +22,10 @@ $$
 次に、$k$種類目の商品を抜いて計算することを考える。$k$種類目の商品を抜いた時のFPSを$G\_k$とすれば、
 
 $$
-\begin{eqnarray}
-G\_k &=& F \frac{1 - x}{1 - x^{a\_k + 1}} \\\\
-     &=& F (1 + x^{a\_k + 1} + x^{2(a\_k + 1)} + \cdots) (1 - x)
-\end{eqnarray}
+\begin{aligned}
+G\_k &= F \frac{1 - x}{1 - x^{a\_k + 1}} \\\\
+     &= F (1 + x^{a\_k + 1} + x^{2(a\_k + 1)} + \cdots) (1 - x)
+\end{aligned}
 $$
 
 $1 + x^{a\_k + 1} + x^{2(a\_k + 1)} + \cdots$は周期$a\_k + 1$ごとに累積和を取る操作なので、$G\_k$は$O(K)$で求められます。

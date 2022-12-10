@@ -41,7 +41,6 @@ $(N, M)$型行列$A$ * $(M, 1)$型行列$\vec{x}$ $=$ $(N, 1)$型行列$B$ と�
 8 9
 ```
 
-<div>
 $$
 B = \left(
   \begin{array}{c}
@@ -51,9 +50,7 @@ B = \left(
   \end{array}
 \right)
 $$
-</div>
 
-<div>
 $$
 A = \left(
   \begin{array}{ccc}
@@ -63,13 +60,11 @@ A = \left(
   \end{array}
 \right)
 $$
-</div>
 
 $A$は, 「どこの爆弾のスイッチを切り替えるか」を縦に並べて, それを横にくっつけた感じです.
 
 答えとなる$\vec{x}$は,
 
-<div>
 $$
 \vec{x} = \left(
   \begin{array}{c}
@@ -80,7 +75,6 @@ $$
   \end{array}
 \right)
 $$
-</div>
 
 となります.
 
@@ -94,11 +88,11 @@ $A$に基本行列$P\_1 P\_2 \cdots P\_k$を右から掛けて(列の基本変�
 
 $\vec{x'}$から$\vec{x}$を求めることを考えます. 
 
-$$ \begin{eqnarray}
-A' \vec{x'} &=& B \\\\
-A P\_1 P\_2 \cdots P\_k \vec{x'} &=& A \vec{x} \\\\
-P\_1 P\_2 \cdots P\_k \vec{x'} &=& \vec{x} \\\\
-\end{eqnarray} $$
+$$ \begin{aligned}
+A' \vec{x'} &= B \\\\
+A P\_1 P\_2 \cdots P\_k \vec{x'} &= A \vec{x} \\\\
+P\_1 P\_2 \cdots P\_k \vec{x'} &= \vec{x} \\\\
+\end{aligned} $$
 
 となるので, $\vec{x'}$を$P\_k$から行の基本変形していけば$\vec{x}$が求まります.
 
