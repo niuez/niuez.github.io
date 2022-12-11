@@ -8,7 +8,7 @@ date: 2022-12-11T15:00:00+09:00
 
 遺伝的アルゴリズム(Genetic Algorithm)の練習として[Introduction to Heuristic Contestの問題](https://atcoder.jp/contests/intro-heuristics/tasks/intro_heuristics_a)を解いてみました。最終的なスコアは117Mで焼きなましの124Mには劣りますが、良い成績は得られていそうです。
 
-[前回]({{< ref "/notes/genetic_local_search_tsp" >}})のも参考に
+[前回勉強したGenetic Algorithmの入門の話]({{< ref "/notes/genetic_local_search_tsp" >}})も参考に
 
 # 方針
 
@@ -21,7 +21,7 @@ date: 2022-12-11T15:00:00+09:00
 
 # Genetic Local Search
 
-各世代を作り終わった後に、局所探索を行うことで個体を改善することを試みます。{{ref . "genetic_local_search_tsp.md" }}も参考にしてください。
+各世代を作り終わった後に、局所探索を行うことで個体を改善することを試みます。[前回]({{< ref "/notes/genetic_local_search_tsp" >}})
 
 # Multi Step Crossover Fusion
 
@@ -33,7 +33,7 @@ date: 2022-12-11T15:00:00+09:00
 
 1. 親$x$の前半分、親$y$の後ろ半分を1点交叉したものを初期解$c$とする。$n = D / 2$とする。
 2. $m = n + \mathrm{rand}(-15, 15)$として、$m$で交叉したものを$p$とする。
-3. 確率$e^{(\mathrm{score}(p) - \mathrm{score}{c}) / T}$で受理
+3. 確率$\exp((\mathrm{score}(p) - \mathrm{score}(c)) / T)$で受理、$c = p, n = m$と更新する。
 4. 1-3を指定回数繰り返す
 
 これを採用すると113Mから117Mまで伸びます。
