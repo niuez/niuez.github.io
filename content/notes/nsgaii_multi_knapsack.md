@@ -17,6 +17,8 @@ date: 2022-12-31T15:00:00+09:00
 3. [多目的最適化問題のNSGA-Ⅱを勉強したの整理しました - Qiita](https://qiita.com/DS27/items/025a52b26a9f2471e67c)
 4. [多目的な最適化問題を解くためにNSGA-Ⅱを解説する - Qiita](https://qiita.com/Taichi-Furukawa/items/a7a0982cc20a401133c0)
 
+参考2で示されているが、目的関数が増えるほどこのアルゴリズムが弱っていく。こういうときはlexicaseが有効になるらしい。(ICPCのコーチ曰く)
+
 # Non-dominated Sorting
 
 日本語では非優劣ソートと呼ばれる。解の中でパレート最適な集合をrank0として、それを取り除き再帰的にrank1, ...を決めていくソートである。これを用いて多目的関数に対するElisitmを実現する。
