@@ -12,3 +12,6 @@ title: "gallery"
 
 ## illust. ゆい
 ![](/gallery/tonoko_e.png)
+
+## illust. ゆい
+![](/gallery/tonoko_winter.png)
