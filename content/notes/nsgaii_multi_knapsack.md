@@ -59,7 +59,7 @@ Multi Knapsack Problem(参考2)に対してNSGA-IIを適用した実装を以下
 
 ![](./notes/multikp.png)
 
-{{< details 提出コード >}}
+{{< details 実験コード >}}
 ```cpp
 #include <vector>
 #include <iostream>

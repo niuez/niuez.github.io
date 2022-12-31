@@ -39,7 +39,7 @@ $(\neg x_1 \lor x_3 \lor x_0) \land (x_2 \lor x_0 \lor x_4) \land (x_0 \lor x4 \
 `N`は変数の個数、`C`は制約の数、`Clauses`は目的関数で節をまとめる数、`V`はV-SATを表す。
 
 
-{{< details 提出コード >}}
+{{< details 実験コード >}}
 ```cpp
 #include <iostream>
 #include <vector>
