@@ -1,4 +1,4 @@
-baseURL = "https://blog.niuez.net/"
+baseURL = "https://niuez.github.io/"
 languageCode = "en-us"
 relativeURLs = false
 googleAnalytics = "UA-157596444-1"
