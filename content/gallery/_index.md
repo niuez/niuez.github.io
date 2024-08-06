@@ -2,16 +2,25 @@
 title: "gallery"
 ---
 
-## illust. 球根
+## original
 ![](/gallery/tonoko.png)
 
 [skebの作品ページ](https://skeb.jp/@usanagi_kon/works/27)
 
-## illust. ゆい
 ![](/gallery/tonoko_2.png)
 
-## illust. ゆい
 ![](/gallery/tonoko_e.png)
 
-## illust. ゆい
 ![](/gallery/tonoko_winter.png)
+
+![](/gallery/with_mini.JPG)
+
+![](/gallery/single_nattimauyo.png)
+
+![](/gallery/multi_nattimauyo.png)
+
+![](/gallery/otona.png)
+
+![](/gallery/change_cloth.png)
+
+![](/gallery/tonoko_plush.png)
