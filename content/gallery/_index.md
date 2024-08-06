@@ -13,6 +13,8 @@ title: "gallery"
 
 ![](/gallery/tonoko_winter.png)
 
+![](/gallery/xmas.png)
+
 ![](/gallery/with_mini.JPG)
 
 ![](/gallery/single_nattimauyo.png)
