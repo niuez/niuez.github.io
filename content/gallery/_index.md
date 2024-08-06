@@ -15,6 +15,8 @@ title: "gallery"
 
 ![](/gallery/prsk_cloth.png)
 
+![](gallery/pasket.png)
+
 ![](/gallery/xmas.png)
 
 ![](/gallery/with_mini.JPG)
