@@ -13,7 +13,7 @@ title: "gallery"
 
 ![](/gallery/tonoko_winter.png)
 
-!{}(/gallery/big_cat.png)
+![](/gallery/big_cat.png)
 
 ![](/gallery/prsk_cloth.png)
 
@@ -32,3 +32,13 @@ title: "gallery"
 ![](/gallery/change_cloth.png)
 
 ![](/gallery/tonoko_plush.png)
+
+![](/gallery/sbww.png)
+
+![](/gallery/yuubinkyoku_tonoko.jpg)
+
+![](/gallery/ikemen_tonoko.jpg)
+
+![](/gallery/trick_xor_treat.jpg)
+
+![](/gallery/nekonekonekoneko.png)
